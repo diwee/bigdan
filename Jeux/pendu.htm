@@ -1,0 +1,198 @@
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title></title>
+<base target="_self">
+</head>
+
+<body background="../fond.gif" bgproperties="fixed">
+<P align=left><b><a href="../jeuxonline.htm"><img border="0" src="revenir.gif" width="75" height="31"></a></b><strong><font size="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></strong><b><font size="2" face="Tahoma">Le pendu</font></b></P>
+
+<P align=left>&nbsp;</P>
+
+<P align=left>&nbsp;</P>
+
+<P align=center>&nbsp;</P>
+
+<P align=center>&nbsp;</P>
+
+<P align=center>&nbsp;</P>
+
+<P align=center>&nbsp;</P>
+
+<P align=center><!--webbot bot="HTMLMarkup" startspan -->
+<SCRIPT language=javascript>
+
+/*
+Submitted by Mike McGrath  http://website.lineone.net/~mike_mcgrath
+Featured on Website Abstraction (http://wsabstract.com)
+For this and over 400+ free scripts, visit http://wsabstract.com
+*/
+
+var alpha=new Array();
+var alpha_index=0;
+
+var bravo=new Array();
+var bravo_index=0;
+
+var running=0;
+var failnum=0;
+var advising=0;
+
+function pick()
+{
+  var choice="";
+  var blank=0;
+ 
+  for (i=0; i<words[index].length; i++)
+  {
+    t=0;
+    for(j=0; j<=alpha_index; j++) 
+    if(words[index].charAt(i)==alpha[j] || words[index].charAt(i)==alpha[j].toLowerCase()) t=1;
+    
+    if (t) choice+=words[index].charAt(i)+" ";
+    else 
+    {
+      choice+="_ ";
+      blank=1;
+    }
+  }   
+    
+  document.f.word.value=choice;
+    
+  if (!blank)
+  {
+    document.f.tried.value="   === BRAVO ! ===";
+    document.f.score.value++;
+    running=0;
+  }
+} 
+
+
+function new_word(form)
+{
+  if(!running)
+  {
+    running=1;
+    failnum=0;
+    form.lives.value=failnum;
+    form.tried.value="";
+    form.word.value="";
+    index=Math.round(Math.random()*10000) % 100;
+    alpha[0]=words[index].charAt(0);
+    alpha[1]=words[index].charAt(words[index].length-1);
+    alpha_index=1;
+    bravo[0]=words[index].charAt(0);
+    bravo[1]=words[index].charAt(words[index].length-1);
+    bravo_index=1;
+    pick();
+  }
+  else advise("Le mot est en place pour jouer !");
+}
+
+function seek(letter)
+{
+  if (!running) advise(".....Cliquez sur GO !");
+  else
+  {
+    t=0;
+    for (i=0; i<=bravo_index; i++)
+    {
+      if (bravo[i]==letter || bravo[i]==letter.toLowerCase()) t=1;
+    }
+
+    if (!t) 
+	  {
+	    document.f.tried.value+=letter+" "
+	    bravo_index++;
+	    bravo[bravo_index]=letter;
+	    
+      for(i=0;i<words[index].length;i++)
+   	  if(words[index].charAt(i)==letter || words[index].charAt(i)==letter.toLowerCase()) t=1;
+  	  
+      if(t)
+      {
+  	    alpha_index++;
+	      alpha[alpha_index]=letter;
+	    }
+	    else failnum++;
+	
+      document.f.lives.value=failnum;
+	    if (failnum==6) 
+      {
+        document.f.tried.value="Perdu, moins un point";
+        document.f.word.value=words[index];
+        document.f.score.value--;
+        running=0;
+      }
+			else pick();
+	  }
+	  else advise("Cette lettre a déjà été utilisée");
+  }
+}
+
+function advise(msg)
+{
+  if (!advising)
+  {
+    advising=-1;
+    savetext=document.f.tried.value;  
+    document.f.tried.value=msg;
+    window.setTimeout("document.f.tried.value=savetext; advising=0;",1000);
+  }
+}
+
+var words = new Array("","voiture","vache","reveil","radar","yoyo","stylo","repondeur","graveur","imprimante","scanner","disque","boite","lapin","amour","lumiere","spot","lampe","alien","hollywood","poster","affiche","fromage","oiseaux","mangeoir","horizon","ouest","magie","carte","triche","feuille","virgule","mario","allemagne","belgique","france","malabar","portable","violon","piano","guitare","fraiche","violet","jaune","rouge","orange","pomme","poire","helicoptere","megadrive","dreamcast","playstation","nintendo","livre","clavier","or","chaine","redaction","DVD","patin","skate","tamtam","disquette","ecran","enceinte","armoire","ordinateur","foire","menteur","tapis","produit","assassin","telephone","pekin","osier","tatouage","pain","journal","fleur","sucette","truite","esquimaux","ski","portique","addidas","reebok","nike","pendule","fruit","tomate","carotte","allumette","papa","maman","menteur","tambour","javascript","cacahuete","camembert","vache","eliescript");
+
+</SCRIPT>
+
+<FORM name=f>
+<TABLE bgColor=#c0c0c0 border=1>
+  <TBODY>
+  <TR>
+    <TD align=right colSpan=4>Score : <INPUT name=score onfocus=score.blur(); 
+      size=2 value=0> <BR>Erreur (6): <INPUT name=lives onfocus=lives.blur(); 
+      size=2 value=0> </TD>
+    <TD align=middle colSpan=7><INPUT name=word onfocus=word.blur(); size=25 
+      value="Le jeu du pendu"> <BR><INPUT name=tried onfocus=tried.blur(); 
+      size=25 value="Go pour commencer."> </TD>
+    <TD align=middle colSpan=2><INPUT onclick=new_word(this.form); type=button value=" GO "> 
+  </TD></TR>
+  <TR>
+    <TD><INPUT onclick="seek('A');" type=button value=" A "></TD>
+    <TD><INPUT onclick="seek('B');" type=button value=" B "></TD>
+    <TD><INPUT onclick="seek('C');" type=button value=" C "></TD>
+    <TD><INPUT onclick="seek('D');" type=button value=" D "></TD>
+    <TD><INPUT onclick="seek('E');" type=button value=" E "></TD>
+    <TD><INPUT onclick="seek('F');" type=button value=" F "></TD>
+    <TD><INPUT onclick="seek('G');" type=button value=" G "></TD>
+    <TD><INPUT onclick="seek('H');" type=button value=" H "></TD>
+    <TD><INPUT onclick="seek('I');" type=button value=" I   "></TD>
+    <TD><INPUT onclick="seek('J');" type=button value=" J  "></TD>
+    <TD><INPUT onclick="seek('K');" type=button value=" K "></TD>
+    <TD><INPUT onclick="seek('L');" type=button value=" L  "></TD>
+    <TD><INPUT onclick="seek('M');" type=button value=" M "></TD></TR>
+  <TR>
+    <TD><INPUT onclick="seek('N');" type=button value=" N "></TD>
+    <TD><INPUT onclick="seek('O');" type=button value=" O "></TD>
+    <TD><INPUT onclick="seek('P');" type=button value=" P "></TD>
+    <TD><INPUT onclick="seek('Q');" type=button value=" Q "></TD>
+    <TD><INPUT onclick="seek('R');" type=button value=" R "></TD>
+    <TD><INPUT onclick="seek('S');" type=button value=" S "></TD>
+    <TD><INPUT onclick="seek('T');" type=button value=" T "></TD>
+    <TD><INPUT onclick="seek('U');" type=button value=" U "></TD>
+    <TD><INPUT onclick="seek('V');" type=button value=" V "></TD>
+    <TD><INPUT onclick="seek('W');" type=button value=" W "></TD>
+    <TD><INPUT onclick="seek('X');" type=button value=" X  "></TD>
+    <TD><INPUT onclick="seek('Y');" type=button value=" Y "></TD>
+    <TD><INPUT onclick="seek('Z');" type=button value=" Z  "></TD></TR></TBODY></TABLE></FORM><!--webbot bot="HTMLMarkup"
+endspan --></P>
+
+</body>
+
+</html>

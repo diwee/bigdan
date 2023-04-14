@@ -1,0 +1,124 @@
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title></title>
+<base target="_self">
+</head>
+
+<body background="../fond.gif" bgproperties="fixed">
+<script language=JavaScript>
+<!---
+
+ok = false
+crt = 1
+t=500
+tim=null
+score=0
+
+function chscore(s) {
+	if (s > 0)
+		score = s
+	else {
+		score = 0
+		t = 500
+	}
+	document.forms[0].score.value = score
+}
+
+function change(k) {
+	ok = true
+
+	if (k == 0) {
+		var i = Math.floor(9*Math.random())
+		document.images[i].src = "will1.gif"
+		document.images[crt].src = "trou.gif"
+		crt = i
+	}
+	else if (k == 1)
+		document.images[crt].src = "will2.gif"
+	else if (k == 2)
+		document.images[crt].src = "will3.gif"
+        else if (k == 3)
+                document.images[crt].src = "will3.gif"
+        else if (k == 4)
+                document.images[crt].src = "will3.gif"
+	else if (k == 5)
+		document.images[crt].src = "will2.gif"
+	else if (k == 6) {
+		document.images[crt].src = "will1.gif"
+		chscore(score-1)
+	}
+
+	tim = setTimeout("change("+(k+1)%7+")", t)
+}
+
+function tue(i) {
+	if (i==crt && ok == true) {
+		ok = false
+		document.images[crt].src = "boum.gif"
+		clearTimeout(tim)
+		tim = setTimeout("change(0)", 500)
+		t = (t*9)/10
+		chscore(score+10)
+	}
+}
+
+// --->
+</script><b><a href="../jeuxonline.htm"><img border="0" src="revenir.gif" width="75" height="31"></a></b><strong><font size="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></strong><b><font size="2" face="Tahoma">Bill Gates</font></b>
+<p>&nbsp;</p>
+<p>&nbsp;:
+
+
+<center>
+
+</p>
+
+<table>
+
+<tr>
+<td> <a href="#.html" onClick = "tue(0)"><img src="trou.gif" border=0 width="64" height="64"></a>
+<td> <a href="#.html" onClick = "tue(1)"><img src="trou.gif" border=0 width="64" height="64"></a>
+<td> <a href="#.html" onClick = "tue(2)"><img src="trou.gif" border=0 width="64" height="64"></a>
+
+<tr>
+<td> <a href="#.html" onClick = "tue(3)"><img src="trou.gif" border=0 width="64" height="64"></a>
+<td> <a href="#.html" onClick = "tue(4)"><img src="trou.gif" border=0 width="64" height="64"></a>
+<td> <a href="#.html" onClick = "tue(5)"><img src="trou.gif" border=0 width="64" height="64"></a>
+
+<tr>
+<td> <a href="#.html" onClick = "tue(6)"><img src="trou.gif" border=0 width="64" height="64"></a>
+<td> <a href="#.html" onClick = "tue(7)"><img src="trou.gif" border=0 width="64" height="64"></a>
+<td> <a href="#.html" onClick = "tue(8)"><img src="trou.gif" border=0 width="64" height="64"></a>
+
+</table>
+
+Tapez sur le Bill !<br>
+
+<form>
+<table>
+<tr>
+<td align=right>
+<td>
+<input type=text value=0 name=score size="20">
+</form>
+
+</center>
+
+<script>
+change(0)
+</script>
+
+<img src=will1.gif width=1 height=1>
+<img src=will2.gif width=1 height=1>
+<img src=will3.gif width=1 height=1>
+<img src=boum.gif width=1 height=1>
+
+
+
+</body>
+

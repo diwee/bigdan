@@ -1,0 +1,551 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Facile Normal Ridicule</title>
+</head>
+
+<body background="../fond.gif" bgproperties="fixed">
+<p align="left"><b><a href="../jeuxonline.htm"><img border="0" src="revenir.gif" width="75" height="31"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Morpion</b></p>
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+
+<script language="JavaScript"><!--
+var mt="     ", x = "  X  ", o = "  O  ";  //Null, X button text, O button text
+var s1, s2, s3, s4, s5, s6, s7, s8, s9;    //Board Space variables
+var turn = 1;                              //Who's turn
+var player1wins=0;   
+var player2wins=0;
+var player1winsinarow=0;
+var player2winsinarow=0;
+var startNewGame=0;                        //Game over, restart
+var gameCount  = 1;                        //Quantity of games played. 
+var skillLevel = 2;   			   // 1=easy, 2=normal, 3=ridiculous
+var rCount = 0;                            //Ridiculous game counter
+
+////////////////////////////////////////////////////////////////////
+function setStatus(num)  { 
+  skillLevel = num;	      //Set Skill level to clicked radio button
+}
+
+////////////////////////////////////////////////////////////////////
+function makeMove(button, form) {
+   if (turn==1) {          
+     if (button.value != mt)             //If space is occupied,
+       alert("Espace occupé"); //tell the user.
+     else {
+       button.value = x;                 //If space is clear, user takes it,
+       checkForWins(form);               //then check for wins.
+     }
+   }
+ 
+   if (turn == 2) {
+   checkBoardMakeMove(form);           //If it's computer's turn, evaluate board, make move.
+   checkForWins(form);                 //Check to see if computer won.
+   }
+}
+
+////////////////////////////////////////////////////////////////////
+function checkForWins(form) {
+ updateBoard(form);  //Update s1 - s9 variables;
+
+ winner=0;           //Set winner as nobody.
+ 
+ if (turn==1)        //If user took the turn and got three spaces in a row, 
+  {                  //then the user wins the game.
+    if (s1==x && s2==x && s3==x) { winner=1; }
+    if (s4==x && s5==x && s6==x) { winner=1; }
+    if (s7==x && s8==x && s9==x) { winner=1; }
+    if (s1==x && s4==x && s7==x) { winner=1; }
+    if (s2==x && s5==x && s8==x) { winner=1; }
+    if (s3==x && s6==x && s9==x) { winner=1; }
+    if (s1==x && s5==x && s9==x) { winner=1; }
+    if (s7==x && s5==x && s3==x) { winner=1; }
+   
+    turn=2;           //Otherwise, the computer gets a turn.
+  }
+ else if (turn==2)    //If computer took a turn and got three spaces in a row,
+  {    		      //then the computer wins.
+    if (s1==o && s2==o && s3==o) { winner=2; }
+    if (s4==o && s5==o && s6==o) { winner=2; }
+    if (s7==o && s8==o && s9==o) { winner=2; }
+    if (s1==o && s4==o && s7==o) { winner=2; }
+    if (s2==o && s5==o && s8==o) { winner=2; }
+    if (s3==o && s6==o && s9==o) { winner=2; }
+    if (s1==o && s5==o && s9==o) { winner=2; }
+    if (s7==o && s5==o && s3==o) { winner=2; }
+          
+    turn=1;	      //Otherwise, the user gets another turn.
+  }
+   
+   if (winner==1) {         //If the user wins:
+     winMessage(1);         //show user winning message.
+     clearBoard(form);      //Clear the spaces.
+     player1wins++;         //Increment user's wins.
+     player1winsinarow++;   //Increment user's wins in a row.
+     player2winsinarow=0;   //Rese the computer's wins in a row.
+     startNewGame=1;        //State that a new game should start.
+     turn=1;                //User keeps turn (gets first turn).
+   }
+   else if (winner==2) {    //If the computer wins:
+     winMessage(2);         //show comp winning message.
+     clearBoard(form);      //Clear all spaces.
+     player2wins++;         //Increment the computer's wins.
+     player2winsinarow++;   //Increment the computer's wins in a row.
+     player1winsinarow=0;   //Reset the user's wins in a row.
+     startNewGame=1;        //State that a new game should start.
+     turn=2;                //Computer keeps turn (gets first turn)
+     checkBoardMakeMove(form);  //Computer makes a new move.
+     turn = 1;                  //Give user the next turn.
+   }
+   
+   if (s1 != mt && s2 != mt && s3 !=mt 
+      && s4 != mt && s5 != mt && s6 !=mt 
+      && s7 != mt && s8 != mt && s9 !=mt && winner==0) {
+       //If the board is full and nobody wins, 
+       startNewGame=1;           //State that a new game should start.
+       alert("Pas de gagnant");   //Show Tie message.
+       clearBoard(form);         //Clear the board.
+   }
+
+   if (startNewGame) {           //If a new game should start,
+     startNewGame=0;             //start it,
+     if (gameCount >= 8)         //If the game counter exceeds 8,
+       gameCount=1;              //reinitialize it to 1,
+     else 
+       gameCount++;              //otherwise, increment the game counter.
+   }
+      
+   winner=0;                     //Reset the winner to be nobody.
+}
+
+
+/////////////////////////////////////////////////////////////////////
+function winMessage(winner) {
+ if (winner == 1) {  //If the user wins, show 1 of 8 messages(depending on the game counter.)
+   if (gameCount==1) alert("Bravo, tu as gagné");  
+   if (gameCount==2) alert("Tu es le meilleur");
+   if (gameCount==3) alert("Tu as gagné et je prend la revanche");
+   if (gameCount==4) alert("Tu as gagné ! Je n'ai pas fais attention ..");
+   if (gameCount==5) alert("J'en ai marre que tu gagnes");
+   if (gameCount==6) alert("Tu as gagné et la prochaine je ne joue plus");
+   if (gameCount==7) alert("Tu me soaul à gagné"); 
+   if (gameCount==8) alert("Arrête de gagné......Merci..");
+ } //end if
+
+ if (winner == 2) { //If the computer wins, show 1 of 8 messages(depending on the game counter.)
+   if (gameCount==1) alert("Woo Hoo! J'ai gagné!!");  
+   if (gameCount==2) alert("J'ai gagné! Je suis le meilleur");
+   if (gameCount==3) alert("Tu c'est pas joué..ha..ha");
+   if (gameCount==4) alert("T'es nul ma parole");
+   if (gameCount==5) alert("Applaudit moi j'ai gagné..");
+   if (gameCount==6) alert("J'ai gagné et tu as perdu");
+   if (gameCount==7) alert("La prochaine fois je te fais gagner..."); 
+   if (gameCount==8) alert("PERDU !!!");
+ } //end if
+} //end function winMessage()
+
+/////////////////////////////////////////////////////////////////////
+function checkBoardMakeMove(form) {
+ updateBoard(form);
+  
+ if (turn == 2 && skillLevel == 1) {     //If it's the computer's turn and
+   if (gameCount == 1) {                 //skillLevel is easy, make moves,
+      if (s1==mt) form.space1.value=o;   //depending on the game counter.
+      else if (s5==mt) form.space5.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s8==mt) form.space8.value=o;
+    }
+   if (gameCount == 2) {  // 7 5 3 1 9 2 8 4 6
+      if (s7==mt) form.space7.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s6==mt) form.space6.value=o;
+    } 
+   if (gameCount == 3) {  // 4 5 6 7 9 1 3 2 8
+      if (s4==mt)  form.space4.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s8==mt) form.space8.value=o;
+    } 
+   if (gameCount == 4) {  // 7 4 1 8 5 2 9 6 3
+      if (s7==mt)  form.space7.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s3==mt) form.space3.value=o;
+    } 
+   if (gameCount == 5) {  // 5 9 7 8 4 6 1 2 3
+      if (s5==mt) form.space5.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s3==mt) form.space3.value=o;
+    } 
+   if (gameCount == 6) {  // 5 2 8 3 7 1 9 4 6
+      if (s5==mt) form.space5.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s6==mt) form.space6.value=o;
+    } 
+   if (gameCount == 7) {  //1 9 5 3 7 8 2 4 6
+      if (s1==mt) form.space1.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s6==mt) form.space6.value=o;
+    } 
+   if (gameCount == 8) {  // 1 3 2 7 4 9 5 8 6
+      if (s1==mt) form.space1.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s6==mt) form.space6.value=o;
+    }  
+ }// end if(skillLevel) 
+ else if (turn == 2 && skillLevel == 2) {   //NORMAL skill level moves
+  if (!priorityMove(form)) {               //Makes a priority move,
+    if (gameCount == 1) {                  //otherwise makes regular moves.
+      if (s1==mt) form.space1.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s8==mt) form.space8.value=o;
+    }
+    if (gameCount == 2) {  // 3 7 9 1 4 2 6 8
+      if (s3==mt) form.space3.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s8==mt) form.space8.value=o;
+    } 
+   if (gameCount == 3) {  // 7 9 1 3 8 6 4 2
+      if (s7==mt)  form.space7.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s2==mt) form.space2.value=o;
+    } 
+   if (gameCount == 4) {  // 9 7 3 1 6 2 8 4
+      if (s9==mt)  form.space9.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s4==mt) form.space4.value=o;
+    } 
+   if (gameCount == 5) {  // 6 2 5 4 8 9 7 1
+      if (s6==mt) form.space6.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s1==mt) form.space1.value=o;
+    } 
+   if (gameCount == 6) {  // 4 2 5 8 6 3 1 7
+      if (s4==mt) form.space4.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s3==mt) form.space3.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s7==mt) form.space7.value=o;
+    } 
+   if (gameCount == 7) {  // 2 4 5 6 8 9 1 7
+      if (s2==mt) form.space2.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s8==mt) form.space8.value=o;
+      else if (s9==mt) form.space9.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s7==mt) form.space7.value=o;
+    } 
+   if (gameCount == 8) {  // 8 6 5 2 4 7 1 9
+      if (s8==mt) form.space8.value=o;
+      else if (s6==mt) form.space6.value=o;
+      else if (s5==mt) form.space5.value=o;
+      else if (s2==mt) form.space2.value=o;
+      else if (s4==mt) form.space4.value=o;
+      else if (s7==mt) form.space7.value=o;
+      else if (s1==mt) form.space1.value=o;
+      else if (s9==mt) form.space9.value=o;
+    }  
+  } // end function priorityMove(form)
+ }// end if (skillLevel == 2)
+ else if (turn == 2 && skillLevel == 3) {       //If skill level is ridiculous,
+   if (!priorityMove(form)) {                   //make ridiculous moves.
+   //351 792    759 138   157 493    953 716   
+   //652 48     254 86    458 26     856 42   
+   //139 256    397 658   971 458    713 425
+   
+   rCount++;					//Increment ridiculous counter.
+   if (rCount > 12)  				//If ridiculous counter exceeds 12,
+     rCount=1;   				//reset it to 1.
+  
+   if (s3==mt && s5==mt && s1==mt && s7==mt && s9==mt && s2==mt && rCount==1) {
+       form.space3.value=o;
+       form.space5.value=o;
+       form.space1.value=o;    }   
+    else if (s7==mt && s5==mt && s9==mt && s1==mt && s3==mt && s8==mt && rCount==4) {
+       form.space7.value=o;
+       form.space5.value=o;
+       form.space9.value=o;    } 
+    else if (s1==mt && s5==mt && s7==mt && s4==mt && s9==mt && s3==mt && rCount==7) {
+       form.space1.value=o;
+       form.space5.value=o;
+       form.space7.value=o;    }  
+    else if (s9==mt && s5==mt && s3==mt && s7==mt && s1==mt && s6==mt && rCount==10) {
+       form.space9.value=o;
+       form.space5.value=o;
+       form.space3.value=o;    }  
+    else if (s6==mt && s5==mt && s2==mt && s4==mt && s8==mt && rCount==2) {
+       form.space6.value=o;
+       form.space5.value=o;
+       form.space2.value=o;    }  
+    else if (s2==mt && s5==mt && s4==mt && s8==mt && s6==mt && rCount==5) {
+       form.space2.value=o;
+       form.space5.value=o;
+       form.space4.value=o;    }  
+    else if (s4==mt && s5==mt && s8==mt && s2==mt && s6==mt && rCount==8) {
+       form.space4.value=o;
+       form.space5.value=o;
+       form.space8.value=o;    }  
+    else if (s8==mt && s5==mt && s6==mt && s4==mt && s2==mt && rCount==11) {
+       form.space8.value=o;
+       form.space5.value=o;
+       form.space6.value=o;    }  
+    else if (s1==mt && s3==mt && s9==mt && s2==mt && s5==mt && s6==mt && rCount==3) {
+       form.space1.value=o;
+       form.space3.value=o;
+       form.space9.value=o;    }  
+    else if (s3==mt && s9==mt && s7==mt && s6==mt && s5==mt && s8==mt && rCount==6) {
+       form.space3.value=o;
+       form.space9.value=o;
+       form.space7.value=o;    }  
+    else if (s9==mt && s7==mt && s1==mt && s4==mt && s5==mt && s8==mt && rCount==9) {
+       form.space9.value=o;
+       form.space7.value=o;
+       form.space1.value=o;    }
+    else if (s7==mt && s1==mt && s3==mt && s4==mt && s2==mt && s5==mt && rCount==12) {
+       form.space7.value=o;
+       form.space1.value=o;
+       form.space3.value=o;    }
+    else if (1) {    //If nothing else works, take em.
+       form.space1.value=o; 
+       form.space3.value=o;
+       form.space5.value=o;   }
+   } // end if (priority)
+ } // end if (skillLevel == 3)
+} // end function checkBoardMakeMove(form);
+
+
+/////////////////////////////////////////////////////////////////////
+function priorityMove(form) {
+ updateBoard(form);
+ 
+// OFFENSE PRIORITIES
+// If the computer is 1 space from a win, take it.
+ if (s1==o && s2==o && s3==mt) {form.space3.value=o; return 1; }
+ else if (s2==o && s3==o && s1==mt) {form.space1.value=o; return 1; }
+ else if (s4==o && s5==o && s6==mt) {form.space6.value=o; return 1; }
+ else if (s6==o && s5==o && s4==mt) {form.space4.value=o; return 1; }
+ else if (s7==o && s8==o && s9==mt) {form.space9.value=o; return 1; }
+ else if (s9==o && s8==o && s7==mt) {form.space7.value=o; return 1; }
+ else if (s1==o && s3==o && s2==mt) {form.space2.value=o; return 1; }
+ else if (s4==o && s6==o && s5==mt) {form.space5.value=o; return 1; }
+ else if (s7==o && s9==o && s8==mt) {form.space8.value=o; return 1; }
+ else if (s7==o && s1==o && s4==mt) {form.space4.value=o; return 1; }
+ else if (s8==o && s2==o && s5==mt) {form.space5.value=o; return 1; }
+ else if (s9==o && s3==o && s6==mt) {form.space6.value=o; return 1; }
+ else if (s1==o && s4==o && s7==mt) {form.space7.value=o; return 1; }
+ else if (s2==o && s5==o && s8==mt) {form.space8.value=o; return 1; }
+ else if (s3==o && s6==o && s9==mt) {form.space9.value=o; return 1; }
+ else if (s7==o && s4==o && s1==mt) {form.space1.value=o; return 1; }
+ else if (s8==o && s5==o && s2==mt) {form.space2.value=o; return 1; }
+ else if (s9==o && s6==o && s3==mt) {form.space3.value=o; return 1; }
+ else if (s1==o && s5==o && s9==mt) {form.space9.value=o; return 1; }
+ else if (s9==o && s5==o && s1==mt) {form.space1.value=o; return 1; }
+ else if (s7==o && s5==o && s3==mt) {form.space3.value=o; return 1; }
+ else if (s3==o && s5==o && s7==mt) {form.space7.value=o; return 1; }
+ else if (s1==o && s9==o && s5==mt) {form.space5.value=o; return 1; }
+ else if (s7==o && s3==o && s5==mt) {form.space5.value=o; return 1; }
+
+// DEFENSE PRIORITIES
+// If the user is one space from a win, block it.
+ if (s1==x && s2==x && s3==mt) {form.space3.value=o; return 1; }
+ else if (s2==x && s3==x && s1==mt) {form.space1.value=o; return 1;}
+ else if (s4==x && s5==x && s6==mt) {form.space6.value=o; return 1;}
+ else if (s6==x && s5==x && s4==mt) {form.space4.value=o; return 1;}
+ else if (s7==x && s8==x && s9==mt) {form.space9.value=o; return 1;}
+ else if (s9==x && s8==x && s7==mt) {form.space7.value=o; return 1;}
+ else if (s1==x && s3==x && s2==mt) {form.space2.value=o; return 1;}
+ else if (s4==x && s6==x && s5==mt) {form.space5.value=o; return 1;}
+ else if (s7==x && s9==x && s8==mt) {form.space8.value=o; return 1;}
+ else if (s7==x && s1==x && s4==mt) {form.space4.value=o; return 1;}
+ else if (s8==x && s2==x && s5==mt) {form.space5.value=o; return 1;}
+ else if (s9==x && s3==x && s6==mt) {form.space6.value=o; return 1;}
+ else if (s1==x && s4==x && s7==mt) {form.space7.value=o; return 1;}
+ else if (s2==x && s5==x && s8==mt) {form.space8.value=o; return 1;}
+ else if (s3==x && s6==x && s9==mt) {form.space9.value=o; return 1;}
+ else if (s7==x && s4==x && s1==mt) {form.space1.value=o; return 1;}
+ else if (s8==x && s5==x && s2==mt) {form.space2.value=o; return 1;}
+ else if (s9==x && s6==x && s3==mt) {form.space3.value=o; return 1;}
+ else if (s1==x && s5==x && s9==mt) {form.space9.value=o; return 1;}
+ else if (s9==x && s5==x && s1==mt) {form.space1.value=o; return 1;}
+ else if (s7==x && s5==x && s3==mt) {form.space3.value=o; return 1;}
+ else if (s3==x && s5==x && s7==mt) {form.space7.value=o; return 1;}
+ else if (s1==x && s9==x && s5==mt) {form.space5.value=o; return 1;}
+ else if (s7==x && s3==x && s5==mt) {form.space5.value=o; return 1;}
+
+//If nobody is about to win, no priority move is made.
+return 0;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+function getStats() {
+ //Show the game win stats in an alert box.
+ alert("Your Wins: " + player1wins + "\t" + "In a row: " + player1winsinarow + "\n" 
+     + "My Wins:   " + player2wins + "\t" + "In a row: " + player2winsinarow);
+}
+
+
+/////////////////////////////////////////////////////////////////////
+function clearBoard(form) {
+ //Sets all space values to empty(mt), or blank.
+ form.space1.value = mt;
+ form.space2.value = mt;
+ form.space3.value = mt;
+ form.space4.value = mt;
+ form.space5.value = mt;
+ form.space6.value = mt;
+ form.space7.value = mt;
+ form.space8.value = mt;
+ form.space9.value = mt;
+}
+
+
+/////////////////////////////////////////////////////////////////////
+function updateBoard(form) {
+ //Sets the s1 - s9 variables to whatever is currently on the board.
+ s1 = form.space1.value;
+ s2 = form.space2.value;
+ s3 = form.space3.value;
+ s4 = form.space4.value;
+ s5 = form.space5.value;
+ s6 = form.space6.value;
+ s7 = form.space7.value;
+ s8 = form.space8.value;
+ s9 = form.space9.value;
+}
+// -->
+</script>
+<form method="POST" name="form1">
+  <p align="center"><font size="1" face="Verdana" color="#FFB200">
+<input type="button" value="     " name="space7" onclick="makeMove(this, form1);">
+<input type="button" value="     " name="space8" onclick="makeMove(this, form1);">
+<input type="button" value="     " name="space9" onclick="makeMove(this, form1);">
+<br>
+<input type="button" value="     " name="space4" onclick="makeMove(this, form1);">
+<input type="button" value="     " name="space5" onclick="makeMove(this, form1);">
+<input type="button" value="     " name="space6" onclick="makeMove(this, form1);">
+<br>
+<input type="button" value="     " name="space1" onclick="makeMove(this, form1);">
+<input type="button" value="     " name="space2" onclick="makeMove(this, form1);">
+<input type="button" value="     " name="space3" onclick="makeMove(this, form1);">
+  </font>
+<P align="center">
+<font size="1" face="Verdana" color="#FFB200">
+<input type="button" value="Stats" name="stats" onclick="getStats();">
+</font>
+<P align="center">
+<font size="1" face="Verdana" color="#FFB200">
+<input type="radio" name="radio1" onclick="setStatus(1);" value="1">Facile
+<br>
+<input type="radio" name="radio1" onclick="setStatus(2);" CHECKED value="2">Normal
+<br>
+<input type="radio" name="radio1" onclick="setStatus(3);" value="3">Ridicule</font>
+  <p> </p>
+</form>
+
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+
+<html>
+
+<head>
+<!-- DEBUT DU SCRIPT -->
+<SCRIPT LANGUAGE="JavaScript">
+/*
+SCRIPT EDITE SUR L'EDITEUR JAVASCRIPT
+http://www.editeurjavascript.com
+*/
+var URlpage = location.href;
+var cook;
+nom = "jc"
+var best;
+var place;
+compteur=1
+var place2;
+	cook = document.cookie;
+	place = cook.indexOf("topscor=",0);
+	if (place <= -1) 
+		{
+		best = "Pas de record"
+		}
+	else
+		{
+		end = cook.indexOf(";",place)
+		if (end <= -1)
+			{best = cook.substring(place+8,cook.length);}
+		else
+			{best = cook.substring(place+8,end);}
+		}
+	place2 = cook.indexOf("point=",1);
+	if (place2 <= -1) 
+		{
+		bests = "2000"
+		}
+	else
+		{
+		end2 = cook.indexOf(";",place2)
+		if (end2 <= -1)
+			{bests = cook.substring(place2+6,cook.length);}
+		else
+			{bests = cook.substring(place2+6,end2);}
+		}
+plustard = new Date(2020,11,11);
+plustard = plustard.toGMTString();
+function record()
+	{
+	document.jeu.rejou.value = "Nouvelle Partie";
+	if (compteur < bests)
+		{
+		nom = prompt('Vous avez réalisé le meilleur score!\nEntrez votre nom','Votre nom ici');
+		best1 = nom.toUpperCase() + ' avec ' + compteur + ' coups';
+		document.cookie = 'topscor=' + best1 + '; expires=' + plustard + ';';
+		document.cookie = 'point= ' + compteur + '; expires=' + plustard + ';';
+		location.href = URlpage;
+		}
+	}
+var secret = Math.round(Math.random() * 1000)
+	function verif()
+	{
+	if (document.jeu.essai.value > secret)
+		{document.jeu.resultat.value = document.jeu.essai.value + ' est trop grand';}
+	if (document.jeu.essai.value < secret)
+		{document.jeu.resultat.value = document.jeu.essai.value + ' est trop petit';}
+	if (document.jeu.essai.value == secret)
+		{
+		document.jeu.nbessai.value = " ";
+		document.jeu.resultat.value = 'Victoire en ' + compteur + ' coups!';
+		record();
+		}
+	document.jeu.nbessai.value = ++compteur
+	document.jeu.essai.value="";
+	document.jeu.essai.focus();
+	}
+function raz()
+	{
+	avant = new Date(96,11,11);
+	avant = avant.toGMTString();
+	best1 = nom +' avec ' + compteur + ' coups';
+	document.cookie = 'topscor=' + best1 + '; expires=' + avant + ';';
+	document.cookie = 'point= ' + compteur + '; expires=' + avant + ';';
+	location.href = URlpage;
+	}
+</SCRIPT>
+<!-- FIN DU SCRIPT -->
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title></title>
+<base target="_self">
+</head>
+
+<body background="../fond.gif" bgproperties="fixed">
+<!-- DEBUT DU SCRIPT -->
+<p align="left"><b><a href="../jeuxonline.htm"><img border="0" src="revenir.gif" width="75" height="31"></a></b><strong><font size="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font></strong><b><font face="Verdana, Arial" size="2">Le plus ou moins</font></b></p>
+<CENTER>
+<FONT SIZE=2 FACE="Verdana, Arial">
+<p>&nbsp;</p>
+<FORM NAME="jeu">
+<U>Trouve un nombre entre 0 et 999<br>
+</U><BR>
+Nb d'essai(s) : <INPUT TYPE="text" NAME="nbessai" SIZE=3 READONLY VALUE="1"><br>
+<BR>
+Ton essai : <INPUT TYPE="text" NAME="essai" SIZE=3 MAXLENGTH=3>&nbsp; <INPUT TYPE="button" NAME="valid" VALUE="Voir" onClick="verif()">&nbsp;
+<INPUT TYPE="text" NAME="resultat" SIZE=20 READONLY>
+<p>Meilleur scoreur : <INPUT TYPE=text NAME="bests" SIZE=30><SCRIPT language="javascript">document.jeu.bests.value = best</SCRIPT><br>
+<BR>
+<INPUT TYPE="button" VALUE="Effacer le meilleur score" onClick="raz()"><br>
+<BR><INPUT TYPE="button" NAME="rejou" VALUE="Recommencer la partie" onClick="location.href = URlpage"></FORM></FONT></CENTER>
+<!-- FIN DU SCRIPT -->
+<p align="center"><br>
+</p>
+<p align="center">&nbsp;</p>
+<p>&nbsp;</p>
+&nbsp;
+<p>&nbsp;</p>
+<p align="center"><br>
+<a href="barre.htm">Home</a> | <a href="Blagues.htm"> Blagues</a> |
+<a href="Trucs.htm"> Trucs</a> | <a href="mp3.htm"> Mp3</a> | <a href="jeuxonline.htm"> Jeux online</a> |
+<a href="Contacts.htm"> Contacts</a> | <a href="Discussion.htm">
+Discussion</a> | <a href="http://www.ifrance.com/_livre/lecture?id=bigdan"> Livre d'or</a></p>
+</body>
+
+</html>

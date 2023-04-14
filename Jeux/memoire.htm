@@ -1,0 +1,193 @@
+
+<html>
+
+<head>
+<!-- DEBUT DU SCRIPT -->
+<SCRIPT LANGUAGE="JavaScript">
+/*
+SCRIPT EDITE SUR L'EDITEUR JAVASCRIPT
+http://www.editeurjavascript.com
+*/
+debut = 0;
+i1 = new Image;
+i1.src = "images/hg_on.gif";
+i2 = new Image;
+i2.src = "images/hd_on.gif";
+i3 = new Image;
+i3.src = "images/bg_on.gif";
+i4 = new Image;
+i4.src = "images/bd_on.gif";
+function NewMemory()
+	{
+	if (debut == 0)
+		{
+		MemoryAsk = "";
+		debut = 1;
+		document.mess.bout.value = "Arreter la partie";
+		AddMemory();
+		}
+	else
+		{
+		document.mess.bout.value = "Commencer la partie";
+		document.mess.message.value = "";
+		clearTimeout(tempo3);
+		clearTimeout(tempo4);
+		debut = 0;
+		document.hg.src = 'images/hg.gif';
+		document.hd.src = 'images/hd.gif';
+		document.bg.src = 'images/bg.gif';
+		document.bd.src = 'images/bd.gif';
+		}
+	}
+function AddMemory()
+	{
+	newBouton = Math.round(Math.random() * 3);
+	MemoryAsk = MemoryAsk + "" + newBouton;
+	count = 0;
+	PlayMemory()
+	}
+function PlayMemory()
+	{
+	speed = 1000;
+	if (MemoryAsk.length > 5 && MemoryAsk.length<10 && debut == 1)
+		{
+		speed = 700;
+		}
+	if (MemoryAsk.length >= 10 && debut == 1)
+		{
+		speed = 400;
+		}
+	document.hg.src = 'images/hg.gif';
+	document.hd.src = 'images/hd.gif';
+	document.bg.src = 'images/bg.gif';
+	document.bd.src = 'images/bd.gif';
+	if (count < MemoryAsk.length)
+		{		
+		document.mess.message.value = "Regardez l'exemple";
+		TempBouton = MemoryAsk.charAt(count);
+		if (TempBouton == "0")
+			{
+			document.hg.src = 'images/hg_on.gif';
+			}
+		if (TempBouton == "1")
+			{
+			document.hd.src = 'images/hd_on.gif';
+			}
+		if (TempBouton == "2")
+			{
+			document.bg.src = 'images/bg_on.gif';
+			}
+		if (TempBouton == "3")
+			{
+			document.bd.src = 'images/bd_on.gif';
+			}
+		count++;
+		tempo3 = setTimeout("document.hg.src = 'images/hg.gif';document.hd.src = 'images/hd.gif';document.bg.src = 'images/bg.gif';document.bd.src = 'images/bd.gif'", speed-150);
+		tempo4 = setTimeout("PlayMemory()", speed);
+		}
+	else
+		{
+		if (debut == 1)
+			{
+			message1 = 'Maintenant, refaites-le!';
+			tempo3 = setTimeout("document.mess.message.value = message1", 300);
+			asked = 0;
+			}
+		else
+			{
+			document.mess.message.value = "";
+			document.mess.bout.value = "Commencer la partie";
+			document.hg.src = 'images/hg.gif';
+			document.hd.src = 'images/hd.gif';
+			document.bg.src = 'images/bg.gif';
+			document.bd.src = 'images/bd.gif';
+			}
+		}
+	}
+function record(elemt)
+	{
+	document.hg.src = 'images/hg.gif';
+	document.hd.src = 'images/hd.gif';
+	document.bg.src = 'images/bg.gif';
+	document.bd.src = 'images/bd.gif';
+	if (elemt == "0")
+			{
+			document.hg.src = 'images/hg_on.gif';
+			}
+		if (elemt == "1")
+			{
+			document.hd.src = 'images/hd_on.gif';
+			}
+		if (elemt == "2")
+			{
+			document.bg.src = 'images/bg_on.gif';
+			}
+		if (elemt == "3")
+			{
+			document.bd.src = 'images/bd_on.gif';
+			}
+		tempo5 = setTimeout("document.hg.src = 'images/hg.gif';document.hd.src = 'images/hd.gif';document.bg.src = 'images/bg.gif';document.bd.src = 'images/bd.gif'", 200);
+	if (elemt != MemoryAsk.charAt(asked))
+		{
+		document.hg.src = 'images/hg.gif';
+		document.hd.src = 'images/hd.gif';
+		document.bg.src = 'images/bg.gif';
+		document.bd.src = 'images/bd.gif';
+		alert("PERDU! Voici la bonne combinaison.");
+		debut = 0;
+		count = 0;
+		speed = 1000;
+		tempo3 = setTimeout("PlayMemory()", 500);
+		}
+	if (elemt == MemoryAsk.charAt(asked))
+		{
+		document.mess.message.value = "C'est bon, continuez!";
+		asked++;
+		if (asked == MemoryAsk.length)
+			{
+			document.mess.message.value = "OK! Regardez l'exemple!";
+			tempo3 = setTimeout("AddMemory()", 1000);
+			}		
+		}
+	}
+</SCRIPT>
+<!-- FIN DU SCRIPT -->
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+</head>
+
+<body><!-- DEBUT DU SCRIPT -->
+
+<CENTER>
+<MAP NAME="im1"><AREA SHAPE="CIRCLE" COORDS="65,61,51" HREF="#" onClick="record('0');document.hg.blur();return(false)"></MAP>
+<MAP NAME="im2"><AREA SHAPE="CIRCLE" COORDS="84,62,52" HREF="#" onClick="record('1');document.hd.blur();return(false)"></MAP>
+<MAP NAME="im3"><AREA SHAPE="CIRCLE" COORDS="69,84,52" HREF="#" onClick="record('2');document.bg.blur();return(false)"></MAP>
+<MAP NAME="im4"><AREA SHAPE="CIRCLE" COORDS="81,84,51" HREF="#" onClick="record('3');document.bd.blur();return(false)"></MAP>
+<p>&nbsp;</p>
+</CENTER>
+
+<p align="left"><strong><font size="4"><a href="jeuxonline.htm">Revenir</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font></strong><font size="4" face="Verdana"><b>Le jeu de mémoire</b></font></p>
+
+<CENTER>
+<p>&nbsp;</p>
+<TABLE WIDTH=300 BORDER=0 CELLSPACING=0 CELLPADDING=0>
+  <TR>
+    <TD WIDTH=300><IMG SRC="images/hg.gif" BORDER=0 HSPACE=0 VSPACE=0 USEMAP="#im1" NAME="hg" width="150" height="150"><IMG SRC="images/hd.gif" BORDER=0 HSPACE=0 VSPACE=0 USEMAP="#im2" NAME="hd" width="150" height="150"><BR><IMG SRC="images/bg.gif" BORDER=0 HSPACE=0 VSPACE=0 USEMAP="#im3" NAME="bg" width="150" height="150"><IMG SRC="images/bd.gif" BORDER=0 HSPACE=0 VSPACE=0 USEMAP="#im4" NAME="bd" width="150" height="150"></TD>
+  </TR>
+  <TR>
+    <TD WIDTH=300 BGCOLOR="#000000"><BR><CENTER><FORM NAME=mess><INPUT TYPE="button" VALUE="Commencer la partie" onClick="NewMemory()" NAME="bout"><BR><INPUT TYPE=text NAME=message SIZE=30><BR></FORM></CENTER></TD>
+  </TR>
+  <TR>
+    <TD WIDTH=300><IMG SRC="images/bas.gif" BORDER=0 WIDTH=300 HEIGHT=25 HSPACE=0 VSPACE=0></TD>
+  </TR>
+  </TABLE></CENTER>
+
+<!-- FIN DU SCRIPT -->
+<p align="center"><a href="barre.htm">Home</a> | <a href="Blagues.htm"> Blagues</a> |
+<a href="Trucs.htm"> Trucs</a> | <a href="mp3.htm"> Mp3</a> | <a href="jeuxonline.htm"> Jeux online</a> |
+<a href="Contacts.htm"> Contacts</a> | <a href="Discussion.htm">
+Discussion</a> | <a href="http://www.ifrance.com/_livre/lecture?id=bigdan"> Livre d'or</a></body>
+
+</html>

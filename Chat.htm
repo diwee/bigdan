@@ -1,0 +1,104 @@
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+</head>
+
+<body>
+<p>&nbsp;</p>
+<p><strong><font size="4"><img border="0" src="index.1.gif" width="105" height="148"></font></strong><strong><font size="4">Discussion</font></strong></p>
+<p>&nbsp;</p>
+<p>Va falloir choisir entre Chat ou Forum !</p>
+<!-- DEBUT DU CODE COUNTUS -->
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+today = new Date;
+sec = today.getTime();
+document.write('<SCRIPT LANGUAGE="javascript" SRC="http://countus.editeurjavascript.com/countus.php3?pseudo=danpham&timer=')
+document.write(sec)
+document.write('&present=1"><\/SCRIPT>')
+//-->
+</SCRIPT>
+<!-- FIN DU CODE COUNTUS -->
+<p>Allez, faites vous plaisir chattez un peu !! Pour commencer cliquer
+si-dessous.<br>
+Bon Chat !!!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<INPUT TYPE="button" VALUE="Chatter !!!" onClick="webo_chat()">
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p>Au
+forum. Cliquez&nbsp; &nbsp;<a href="http://www.ifrance.com/_forum/?ForumName=bigdan">ICI</a>
+!! </FORM>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p align="center"><a href="barre.htm">Home</a> | <a href="Blagues.htm"> Blagues</a> |
+<a href="Trucs.htm"> Trucs</a> | <a href="mp3.htm"> Mp3</a> | <a href="jeuxonline.htm"> Jeux online</a> |
+<a href="sms.html">Sms</a> |
+<a href="Contacts.htm"> Contacts</a> | <a href="Discussion.htm">
+Discussion</a> | <a href="http://www.ifrance.com/_livre/lecture?id=bigdan"> Livre d'or</a>
+</body>
+
+</html>
+<!-- CODE DE CHAT WEBORAMA EXCLUSIVEMENT RESERVE AUX ABONNES DU WEBORAMA NE PAS MODIFIER (Y COMPRIS CES LIGNES)-->
+<!-- LE WEBORAMA OFFRE DE NOMBREUX SERVICES GRATUITS. PLUS D'INFO http://www.weborama.fr -->
+
+<SCRIPT language=javascript>
+//METTEZ LE NOM QUE VOUS VOULEZ A LA PLACE DE WEBORAMA DANS LA LIGNE DU DESSOUS (PAS D'ESPACE NI DE CARACTERES SPECIAUX)
+
+var espace = 'bigdan'; //Correspond au nom de l'espace dans lequel les gens vont discuter
+
+//Ne plus rien modifier a partir d'ici.
+liste_car = '0123456789abcdefghijklmnopqrstuvwxyz_-ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function dropChars (s)
+{
+	var i;
+    var returnString = "";
+    for (i = 0; i < s.length; i++)
+    {
+        var c = s.charAt(i);
+		if (c.indexOf(' ')==0) c='_';
+        if (liste_car.indexOf(c) != -1) returnString += c;
+    }
+    return returnString;
+}
+
+function webo_chat(num)
+{
+	if (parseInt(navigator.appVersion.charAt(0))>=3)
+	{
+		mon_nom = prompt("Choisissez votre nom pour rejoindre le chat\n et discuter en ligne grace à WebOrama\n(pas d'accents ni de caractères spéciaux)",'Votre_nom');
+		if (mon_nom)
+		{
+			mon_nom=dropChars(mon_nom);
+			if (mon_nom.length>0)
+			{
+				espace = dropChars(espace);
+				if (espace.length==0) espace='weborama';
+				var chaine = 'http://chat.weborama.fr/chat.html?room=' + espace + '&name='+mon_nom;
+				mon_chat = window.open(chaine,'webochat','WIDTH=750,HEIGHT=550,resize=no');
+			}
+			else
+			{
+				alert('Vous devez choisir un nom sans accents!');
+			}
+		}
+		else
+		{
+			alert('Vous devez choisir un nom!');
+		}
+	}
+	else
+	{
+		alert("Votre navigateur ne permet malheureusement pas d\'utiliser ce chat\nA bientot sur weborama.");
+	}
+}
+</SCRIPT>
+
+<!-- LES PERSONNES QUI COMPRENNENT PARFAITEMENT LE CODE ci-dessous peuvent le modifier-->
+<!-- On peut remplacer le formulaire par un lien avec un onClick= et un return false -->
+<!-- Ne vous plaignez pas si ca ne marche plus apres ;) -->
+<FORM NAME=WEBO_CHAT>
