@@ -11,6 +11,16 @@
 <meta name="ProgId" content="FrontPage.Editor.Document">
 <title>Espace Membre</title>
 <base target="_self">
+<script type="text/javascript">
+function Login(){
+    var password = document.getElementById('password').value;
+    if (password==="pass"){
+        window.location="espace_membres.htm";
+    } else{
+        window.location="espace.htm";
+    }
+}
+</script>
 </head>
 
 <body background="fond.gif" bgproperties="fixed">
@@ -35,7 +45,7 @@
             <p align="left"><font face="Arial, Helvetica, sans-serif" size="2">&nbsp;
             Login:</font> 
             <input type=text name=username>
-            <font face="Arial, Helvetica, sans-serif" size="2">Mots De Passe: </font><input type=password name=password size="20">
+            <font face="Arial, Helvetica, sans-serif" size="2">Mots De Passe: </font><input type="password" id="password" size="20">
             <br>
             &nbsp;
           </div>
