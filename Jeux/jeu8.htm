@@ -18,6 +18,7 @@ crt = 1
 t=500
 tim=null
 score=0
+offset = 1
 
 function chscore(s) {
 	if (s > 0)
@@ -34,22 +35,22 @@ function change(k) {
 
 	if (k == 0) {
 		var i = Math.floor(9*Math.random())
-		document.images[i].src = "will1.gif"
-		document.images[crt].src = "trou.gif"
+		document.images[offset+i].src = "will1.gif"
+		document.images[offset+crt].src = "trou.gif"
 		crt = i
 	}
 	else if (k == 1)
-		document.images[crt].src = "will2.gif"
+		document.images[offset+crt].src = "will2.gif"
 	else if (k == 2)
-		document.images[crt].src = "will3.gif"
-        else if (k == 3)
-                document.images[crt].src = "will3.gif"
-        else if (k == 4)
-                document.images[crt].src = "will3.gif"
+		document.images[offset+crt].src = "will3.gif"
+	else if (k == 3)
+		document.images[offset+crt].src = "will3.gif"
+	else if (k == 4)
+		document.images[offset+crt].src = "will3.gif"
 	else if (k == 5)
-		document.images[crt].src = "will2.gif"
+		document.images[offset+crt].src = "will2.gif"
 	else if (k == 6) {
-		document.images[crt].src = "will1.gif"
+		document.images[offset+crt].src = "will1.gif"
 		chscore(score-1)
 	}
 
@@ -59,7 +60,7 @@ function change(k) {
 function tue(i) {
 	if (i==crt && ok == true) {
 		ok = false
-		document.images[crt].src = "boum.gif"
+		document.images[offset+crt].src = "boum.gif"
 		clearTimeout(tim)
 		tim = setTimeout("change(0)", 500)
 		t = (t*9)/10
