@@ -1,7 +1,14 @@
-<SCRIPT LANGUAGE="JavaScript">
+
+<html>
+
+<head>
+<script language="JavaScript">
+<!--Javascript fournit par-->
+<!-- [Fafa's World - ScriptMaster]--> 
+<!-- http://www.script.free.fr/--> 
+
 <!-- Original:  Paul (Poke_Paul@hotmail.com) -->
 <!-- Web Site:  http://www.angelfire.com/ak3/MewHiddenLair -->
-
 
 <!-- Begin
 now=new Date;
@@ -33,25 +40,25 @@ for (var i=0;i!=num;i++) bars += '';
 document.ctrform.will.value = bars;
 }
 var mood = new Array;
-mood[0] = 'Happy';
-mood[1] = 'Mad';
+mood[0] = 'Content';
+mood[1] = 'Fou!';
 mood[2] = 'Ticked-Off';
-mood[3] = 'Suicidal';
-mood[4] = 'Elated';
+mood[3] = 'Suicide';
+mood[4] = 'Joyeux';
 var Stat = new Array;
-Stat[0] = 'Alive';
-Stat[1] = 'Pokeball cleaned';
-Stat[2] = 'Pokeball not messy';
-Stat[3] = 'In pain';
-Stat[4] = 'Dead';
-Stat[5] = 'Infected!';
-Stat[6] = 'Disinfected!';
-Stat[7] = 'Not infected';
-Stat[8] = 'Drooling';
+Stat[0] = 'Vivant';
+Stat[1] = 'Propre';
+Stat[2] = 'Propre';
+Stat[3] = 'Aie Aie!';
+Stat[4] = 'Mort';
+Stat[5] = 'Malade!';
+Stat[6] = 'Guerit!';
+Stat[7] = 'Pas malade';
+Stat[8] = 'Dormir';
 var alive = false, aniID, statID, moodID, liveID, crapID, sickID, illID, normguy = '<(^_^)>';
 function gLiphe() {
 normguy = '<(^_^)>';
-stat('Catching...');
+stat('Naissance...');
 livewill(15);
 statID = setTimeout("stat(Stat[0])",3500);
 setTimeout("alive = true",3500);
